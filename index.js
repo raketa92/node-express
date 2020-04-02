@@ -20,6 +20,7 @@ app.set('views', 'views')
 
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({extended: true}))
+
 app.use('/', homeRoutes)
 app.use('/add', addRoutes)
 app.use('/courses', coursesRoutes)
@@ -31,7 +32,11 @@ const PORT = process.env.PORT || 3000
 async function start() {
     try {
         const url = 'mongodb+srv://nazar:TpSnwgPWtNqhRsKr@cluster0-ojuhi.mongodb.net/shop'
-        await mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true})
+        await mongoose.connect(url, {
+            useNewUrlParser: true, 
+            useUnifiedTopology: true,
+            useFindAndModify: false
+        })
         app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`)
     })
